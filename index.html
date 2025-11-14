@@ -7,8 +7,8 @@
 <style>
 html {
   color-scheme: light dark;
-  font-family: sans-serif;
   line-height: 1.5;
+  font-family: sans-serif;
 }
 body {
   box-sizing: border-box;
@@ -33,30 +33,45 @@ p:first-child {
 dd {
   margin-inline-start: 1em;
 }
-footer {
+label {
+  display: inline-flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.25em 0;
+  white-space: pre;
+}
+textarea,
+[type=text] {
+  font-size: 0.875rem;
+  line-height: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+[type=text] {
+  padding-block: 0;
+  padding-inline: 0.25em;
+}
+footer,
+.description {
   font-size: 0.875rem;
 }
+.inline-block {
+  display: inline-block;
+}
 .textbar {
-  font-size: 0.875rem;
   flex-grow: 1;
+  font-size: 0.875rem;
   margin: 0;
   max-width: 40em;
 }
 #text {
   box-sizing: border-box;
   display: block;
-  font-family: inherit;
-  line-height: inherit;
-  font-size: inherit;
-  margin: 0;
   padding-block: 0.25em;
   padding-inline: 0.5em;
   resize: none;
   width: 100%;
   height: 100%;
-}
-.description {
-  font-size: 0.875rem;
 }
 </style>
 </head>
@@ -65,13 +80,13 @@ footer {
 <div>
   <p><label>무시하는 행: <input id="dinkus" type="text" value="* * *"></label></p>
   <dl>
-    <dt>공백 및 개행 미포함:</dt>
+    <dt>공백 및 <span class="inline-block">개행 미포함:</span></dt>
     <dd id="no-white">0</dd>
-    <dt>공백 포함, 개행 미포함<sup>*</sup>:</dt>
+    <dt>공백 포함, <span class="inline-block">개행 미포함<sup>*</sup>:</span></dt>
     <dd id="no-break">0</dd>
-    <dt>공백 포함, 개행 포함:</dt>
+    <dt>공백 포함, <span class="inline-block">개행 포함:</span></dt>
     <dd id="all">0</dd>
-    <dt>공백 포함, 개행 포함, 빈 줄 미포함:</dt>
+    <dt>공백 포함, <span class="inline-block">개행 포함,</span> <span class="inline-block">빈 줄 미포함:</span></dt>
     <dd id="no-empty">0</dd>
   </dl>
   <p class="description">* 한컴오피스 한글, 문피아 기준</p>
