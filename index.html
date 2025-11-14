@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>글자수 세기</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+html {
+  color-scheme: light dark;
+  font-family: sans-serif;
+  line-height: 1.5;
+}
+body {
+  box-sizing: border-box;
+  display: flex;
+  gap: 0 1.5rem;
+  justify-content: center;
+  margin: 0;
+  padding: 0.5rem;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+p,
+dl,
+hr,
+footer {
+  margin-block: 1.5em 0;
+  word-break: keep-all;
+}
+p:first-child {
+  margin-block-start: 0;
+}
+dd {
+  margin-inline-start: 1em;
+}
+footer {
+  font-size: 0.875rem;
+}
+.textbar {
+  font-size: 0.875rem;
+  flex-grow: 1;
+  margin: 0;
+  max-width: 40em;
+}
+#text {
+  box-sizing: border-box;
+  display: block;
+  font-family: inherit;
+  line-height: inherit;
+  font-size: inherit;
+  margin: 0;
+  padding-block: 0.25em;
+  padding-inline: 0.5em;
+  resize: none;
+  width: 100%;
+  height: 100%;
+}
+.description {
+  font-size: 0.875rem;
+}
+</style>
+</head>
+<body>
+<div class="textbar"><textarea id="text"></textarea></div>
+<div>
+  <p><label>무시하는 행: <input id="dinkus" type="text" value="* * *"></label></p>
+  <dl>
+    <dt>공백 미포함:</dt>
+    <dd id="no-white">0</dd>
+    <dt>공백 포함, 개행 미포함<sup>*</sup>:</dt>
+    <dd id="no-break">0</dd>
+    <dt>공백 포함, 개행 포함:</dt>
+    <dd id="all">0</dd>
+    <dt>공백 포함, 개행 포함, 빈 줄 미포함:</dt>
+    <dd id="no-empty">0</dd>
+  </dl>
+  <p class="description">* 한컴오피스 한글, 문피아 기준</p>
+  <hr>
+  <footer>© 2025 주유월 &lt;<a href="mailto:ju@yuwol.pe.kr">ju@yuwol.pe.kr</a>&gt;</footer>
+</div>
+<script>
+'use strict';
+{
+const segmenter = new Intl.Segmenter('en');
+const textBox = document.getElementById('text');
+const dinkusBox = document.getElementById('dinkus');
+const noWsText = document.getElementById('no-white').lastChild;
+const noBrText = document.getElementById('no-break').lastChild;
+const allText = document.getElementById('all').lastChild;
+const noEmptyText = document.getElementById('no-empty').lastChild;
+(dinkusBox.onchange = textBox.oninput = () => {
+  const text = textBox.value.trim();
+  if (text === '') {
+    noEmptyText.data = allText.data = noBrText.data = noWsText.data = '0';
+    return;
+  }
+  let lines = text.split('\n');
+  let noWsCount = 0;
+  let noBrCount = 0;
+  let allCount = 0;
+  let noEmptyCount = 0;
+  const dinkus = dinkusBox.value;
+  if (dinkus) {
+    if ('filter' in Iterator.prototype) lines = lines.values();
+    lines = lines.filter(e => e !== dinkus);
+  }
+  for (let line of lines) {
+    ++allCount;
+    line = line.trim();
+    if (line === '') continue;
+    ++noEmptyCount;
+    for (const e of segmenter.segment(line)) {
+      if (e.segment !== ' ') ++noWsCount;
+      ++noBrCount;
+      ++allCount;
+      ++noEmptyCount;
+    }
+  }
+  --allCount;
+  --noEmptyCount;
+  noWsText.data = noWsCount + '';
+  noBrText.data = noBrCount + '';
+  allText.data = allCount + '';
+  noEmptyText.data = noEmptyCount + '';
+})();
+}
+</script>
+</body>
+</html>
