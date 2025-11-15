@@ -28,18 +28,16 @@ footer {
   word-break: keep-all;
 }
 dd {
-  margin-inline-start: 1em;
+  margin-inline: 1em 0;
 }
 textarea,
 [type=text] {
+  box-sizing: border-box;
   font-size: 0.875rem;
   line-height: inherit;
   font-family: inherit;
   margin: 0;
-}
-[type=text] {
-  padding-block: 0;
-  padding-inline: 0.25em;
+  min-width: 44px;
 }
 footer,
 [id$=-description] {
@@ -59,7 +57,6 @@ footer,
   max-width: 40em;
 }
 #text {
-  box-sizing: border-box;
   display: block;
   padding-block: 0.25em;
   padding-inline: 0.5em;
@@ -73,6 +70,12 @@ footer,
   flex-wrap: wrap;
   gap: 0.25em 0;
   margin-block-start: 0;
+}
+#dinkus {
+  flex-grow: 1;
+  padding-block: 0;
+  padding-inline: 0.25em;
+  width: 10em;
 }
 </style>
 <link rel="icon" href="data:,">
